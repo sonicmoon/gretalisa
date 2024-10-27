@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wave Effect Site</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #000;
+            position: relative;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .wave {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.7);
+            pointer-events: none;
+            animation: wave-animation 0.6s linear;
+        }
+
+        @keyframes wave-animation {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        .cursor-follower {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+    <img src="https://images3.memedroid.com/images/UPLOADED102/669d189ce0d9f.jpeg" alt="Main Image">
+
+    <script>
+        const body = document.body;
+
+        // Create wave effect on click
+        body.addEventListener('click', (e) => {
+            const wave = document.createElement('div');
+            wave.className = 'wave';
+            const size = Math.random() * 50 + 50;
+            wave.style.width = `${size}px`;
+            wave.style.height = `${size}px`;
+            wave.style.left = `${e.clientX - size / 2}px`;
+            wave.style.top = `${e.clientY - size / 2}px`;
+            body.appendChild(wave);
+
+            // Remove the wave after animation
+            wave.addEventListener('animationend', () => {
+                wave.remove();
+            });
+        });
+
+        // Cursor follower
+        const cursorFollower = document.createElement('div');
+        cursorFollower.className = 'cursor-follower';
+        body.appendChild(cursorFollower);
+
+        body.addEventListener('mousemove', (e) => {
+            cursorFollower.style.left = `${e.clientX}px`;
+            cursorFollower.style.top = `${e.clientY}px`;
+        });
+    </script>
+</body>
+</html>
